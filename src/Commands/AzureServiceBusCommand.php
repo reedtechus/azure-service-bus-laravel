@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace ReedTech\AzureServiceBus\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class AzureServiceBusCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'azure-service-bus-laravel';
 
     public $description = 'My command';
 
