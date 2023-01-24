@@ -111,7 +111,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
--   [Chris Reed](https://github.com/ chrisreedio)
+-   [Chris Reed](https://github.com/chrisreedio)
 -   [All Contributors](../../contributors)
 
 ## License
