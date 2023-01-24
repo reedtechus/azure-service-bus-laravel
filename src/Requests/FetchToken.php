@@ -19,7 +19,7 @@ class FetchToken extends SoloRequest implements Cacheable, HasBody
 	/**
 	 * The HTTP verb the request will use.
 	 *
-	 * @var Method|null
+	 * @var Method
 	 */
 	protected Method $method = Method::POST;
 

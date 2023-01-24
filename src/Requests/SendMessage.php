@@ -11,7 +11,7 @@ class SendMessage extends Request
 	/**
 	 * The HTTP verb the request will use.
 	 *
-	 * @var Method|null
+	 * @var Method
 	 */
 	protected Method $method = Method::POST;
 
