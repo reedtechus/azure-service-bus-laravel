@@ -10,7 +10,7 @@ use ReedTech\AzureServiceBus\ServiceBusApi;
 
 class ServiceBusSendMessageCommand extends Command
 {
-	public $signature = 'azure:service-bus:messages:send';
+	public $signature = 'azure:service-bus:messages:send {path : The path to the queue or topic}';
 
 	public $description = 'Sends a test message to the service bus.';
 

@@ -3,11 +3,15 @@
 namespace ReedTech\AzureServiceBus\Requests;
 
 use ReedTech\AzureServiceBus\Responses\SendMessageResponse;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
+use Saloon\Traits\Body\HasJsonBody;
 
-class SendMessage extends Request
+class SendMessage extends Request implements HasBody
 {
+	use HasJsonBody;
+
 	/**
 	 * The HTTP verb the request will use.
 	 *

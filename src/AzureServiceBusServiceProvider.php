@@ -3,6 +3,8 @@
 namespace ReedTech\AzureServiceBus;
 
 use ReedTech\AzureServiceBus\Commands\ServiceBusAuthCommand;
+use ReedTech\AzureServiceBus\Commands\ServiceBusPeekMessageCommand;
+use ReedTech\AzureServiceBus\Commands\ServiceBusPopMessageCommand;
 use ReedTech\AzureServiceBus\Commands\ServiceBusSendMessageCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -23,7 +25,10 @@ class AzureServiceBusServiceProvider extends PackageServiceProvider
 			// ->hasMigration('create_azure-service-bus-laravel_table')
 			->hasCommands(
 				ServiceBusAuthCommand::class,
-				ServiceBusSendMessageCommand::class
+				ServiceBusSendMessageCommand::class,
+				ServiceBusPeekMessageCommand::class,
+				ServiceBusPopMessageCommand::class,
+
 			);
 	}
 }
