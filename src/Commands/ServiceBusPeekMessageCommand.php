@@ -4,6 +4,7 @@ namespace ReedTech\AzureServiceBus\Commands;
 
 
 use Illuminate\Console\Command;
+use ReedTech\AzureServiceBus\Facades\AzureServiceBus;
 use ReedTech\AzureServiceBus\Requests\PeekMessage;
 use ReedTech\AzureServiceBus\ServiceBusApi;
 
@@ -18,21 +19,13 @@ class ServiceBusPeekMessageCommand extends Command
 		$path = $this->argument('path');
 		$subscription = $this->argument('subscription');
 
-		$this->info('Attempting to peek a message from the Azure Service Bus...');
-		// $response = (new ServiceBusApi())->send(new SendMessage($path, $payload));
-		// $request = new SendMessage($path, $payload);
-		$request = new PeekMessage($path, $subscription);
-		$response = (new ServiceBusApi())->send($request);
-
-		// Handle any errors
-		if ($response->failed()) {
-			$this->error('Failed to peek message: ' . $response->status());
-			return Command::FAILURE;
-		}
+		// Non-destructively Peek the next message off the queue/subscription
+		// This will throw an exception if it fails
+		$dataObject = AzureServiceBus::peek($path, $subscription);
 
 		$this->info('Message peek sucessfully!');
 
-		dump($response->body());
+		dump($dataObject);
 
 		return self::SUCCESS;
 	}

@@ -8,27 +8,24 @@ use ReedTech\AzureServiceBus\Requests\SendMessage;
 
 class AzureServiceBus
 {
-	public function peek(string $path, ?string $subscription): object
+	public static function peek(string $path, ?string $subscription = null): object
 	{
 		$request = new PeekMessage($path, $subscription);
-		$response = (new ServiceBusApi())->send($request);
-		$response->throw();
-		return new $response->object();
+		$response = (new ServiceBusApi())->send($request)->throw();
+		return $response->object();
 	}
 
-	public function pop(string $path, ?string $subscription): object
+	public static function pop(string $path, ?string $subscription = null): object
 	{
 		$request = new PopMessage($path, $subscription);
-		$response = (new ServiceBusApi())->send($request);
-		$response->throw();
-		return new $response->object();
+		$response = (new ServiceBusApi())->send($request)->throw();
+		return $response->object();
 	}
 
-	public function send(string $path, array $payload): bool
+	public static function send(string $path, array $payload): bool
 	{
 		$request = new SendMessage($path, $payload);
-		$response = (new ServiceBusApi())->send($request);
-		$response->throw();
+		$response = (new ServiceBusApi())->send($request)->throw();
 		return $response->successful();
 	}
 }

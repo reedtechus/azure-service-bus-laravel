@@ -4,9 +4,7 @@ namespace ReedTech\AzureServiceBus\Commands;
 
 
 use Illuminate\Console\Command;
-use ReedTech\AzureServiceBus\Requests\FetchToken;
-use ReedTech\AzureServiceBus\Requests\SendMessage;
-use ReedTech\AzureServiceBus\ServiceBusApi;
+use ReedTech\AzureServiceBus\AzureServiceBus;
 
 class ServiceBusSendMessageCommand extends Command
 {
@@ -19,14 +17,9 @@ class ServiceBusSendMessageCommand extends Command
 		$path = 'ip_request';
 		$payload = ['address' => '127.0.0.1'];
 
-		$this->info('Sending a message to the Azure Service Bus...');
-		$response = (new ServiceBusApi())->send(new SendMessage($path, $payload));
-
-		// Handle any errors
-		if ($response->failed()) {
-			$this->error('Failed to send message: ' . $response->status());
-			return Command::FAILURE;
-		}
+		// Send a message to the queue/topic
+		// This will throw an exception if it fails
+		AzureServiceBus::send($path, $payload);
 
 		$this->info('Message sent sucessfully!');
 

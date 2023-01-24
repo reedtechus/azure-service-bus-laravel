@@ -4,8 +4,10 @@ namespace ReedTech\AzureServiceBus\Commands;
 
 
 use Illuminate\Console\Command;
+use ReedTech\AzureServiceBus\AzureServiceBus;
 use ReedTech\AzureServiceBus\Requests\PopMessage;
 use ReedTech\AzureServiceBus\ServiceBusApi;
+use Saloon\Exceptions\Request\RequestException;
 
 class ServiceBusPopMessageCommand extends Command
 {
@@ -18,21 +20,21 @@ class ServiceBusPopMessageCommand extends Command
 		$path = $this->argument('path');
 		$subscription = $this->argument('subscription');
 
-		$this->info('Attempting to pop a message from the Azure Service Bus...');
+		try {
+			// Destructively Pop the next message off the queue/subscription
+			$dataObject = AzureServiceBus::pop($path, $subscription);
 
-		$request = new PopMessage($path, $subscription);
-		$response = (new ServiceBusApi())->send($request);
+			$this->info('Message popped sucessfully!');
+			dump($dataObject);
 
-		// Handle any errors
-		if ($response->failed()) {
-			$this->error('Failed to pop message: ' . $response->status());
+			return self::SUCCESS;
+		} catch (RequestException $e) {
+			if ($e->getStatus() == 204) {
+				$this->warn('No messages to pop');
+			} else {
+				$this->error('Failed to pop message: ' . $e->getMessage());
+			}
 			return Command::FAILURE;
 		}
-
-		$this->info('Message popped sucessfully!');
-
-		dump($response->body());
-
-		return self::SUCCESS;
 	}
 }
